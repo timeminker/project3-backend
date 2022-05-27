@@ -1,6 +1,9 @@
 {
   "name": "project3-backend",
   "version": "1.0.0",
+  "engines": {
+    "node": "16.14.2"
+  },
   "description": "GA Project 3 Back End",
   "main": "server.js",
   "scripts": {
