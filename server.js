@@ -8,12 +8,10 @@ const Plants = require('./models/plants.js')
 
 require('dotenv').config()
 
-const PORT = process.env.PORT
 
-const PROJECT3_DB = process.env.PROJECT3_DB
+
 
 const app = express()
-require('dotenv').config()
 
 //___________________
 //Port
@@ -25,7 +23,7 @@ const PORT = process.env.PORT
 //Database
 //___________________
 // How to connect to the database either via heroku or locally
-const MONGODB_URI = process.env.MONGODB_URI
+const PROJECT3_DB = process.env.PROJECT3_DB
 
 //___________________
 //Middleware
@@ -65,12 +63,9 @@ app.get('/', (req, res) => {
 //___________________
 //Listener
 //___________________
-app.listen(PORT, () => console.log( 'Listening on port:', MONGODB_URI));
+app.listen(PORT, () => console.log('Listening on port: 3000'));
 
 
-app.listen(PORT, () => {
-  console.log('listening on port: 3000');
-})
 // Connect to Mongo
 mongoose.connect(PROJECT3_DB  ,  { useNewUrlParser: true});
 
