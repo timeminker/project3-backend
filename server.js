@@ -1,3 +1,6 @@
+//___________________
+//Dependencies
+//___________________
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors')
@@ -5,13 +8,29 @@ const Plants = require('./models/plants.js')
 
 require('dotenv').config()
 
-const PORT = process.env.PORT
 
-const PROJECT3_DB = process.env.PROJECT3_DB
+
 
 const app = express()
+
+//___________________
+//Port
+//___________________
+// Allow use of Heroku's port or your own local port, depending on the environment
+const PORT = process.env.PORT
+
+//___________________
+//Database
+//___________________
+// How to connect to the database either via heroku or locally
+const PROJECT3_DB = process.env.PROJECT3_DB
+
+//___________________
+//Middleware
+//___________________
 app.use(express.json())
 app.use(cors())
+
 
 
 
@@ -27,6 +46,7 @@ app.get('/plants', (req, res) => {
     res.json(foundPlant)
   })
 })
+
 
 app.delete('/plants/:id', (req, res) => {
   Plants.findByIdAndDelete(req.params.id, (err, deletedPlant) => {
@@ -44,10 +64,13 @@ app.put('/plants/:id', (req, res) => {
 //   res.send('hello world');
 // })
 
+//___________________
+//Listener
+//___________________
+app.listen(PORT, () => console.log('Listening on port: 3000'));
 
-app.listen(PORT, () => {
-  console.log('listening on port: 3000');
-})
+
+
 // Connect to Mongo
 mongoose.connect(PROJECT3_DB  ,  { useNewUrlParser: true});
 // mongoose.connect('mongodb://localhost:27017/plants')
