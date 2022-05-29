@@ -5,6 +5,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors')
 const Plants = require('./models/plants.js')
+const Notes = require('./models/notes.js')
 
 require('dotenv').config()
 
@@ -57,6 +58,20 @@ app.delete('/plants/:id', (req, res) => {
 app.put('/plants/:id', (req, res) => {
   Plants.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, updatedPlant) => {
     res.json(updatedPlant)
+  })
+})
+
+app.put('/notes/:id', (req, res) => {
+  Plants.findById(req.params.id, (err, foundPlant) => {
+    res.json(foundPlant)
+  })
+})
+
+app.post('/notes/:id', (req, res) => {
+  Notes.create(req.body, (err, review) => {
+    Plants.findByIdAndUpdate(req.params.id, {$push:{notes:note}}, {new:true}, (err, newNote) => {
+      res.json(newNote)
+    })
   })
 })
 
