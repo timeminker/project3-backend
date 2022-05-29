@@ -49,8 +49,8 @@ app.listen(PORT, () => {
   console.log('listening on port: 3000');
 })
 // Connect to Mongo
-// mongoose.connect(PROJECT3_DB  ,  { useNewUrlParser: true});
-mongoose.connect('mongodb://localhost:27017/plants')
+mongoose.connect(PROJECT3_DB  ,  { useNewUrlParser: true});
+// mongoose.connect('mongodb://localhost:27017/plants')
 
 // Error / success
 mongoose.connection.on('error', (err) => console.log(err.message + ' is Mongod not running?'));
