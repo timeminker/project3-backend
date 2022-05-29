@@ -35,6 +35,7 @@ app.use(cors())
 
 
 
+
 //routes
 app.post('/plants', (req, res) => {
   Plants.create(req.body, (err, addPlant) => {
@@ -42,10 +43,12 @@ app.post('/plants', (req, res) => {
   })
 })
 
+
 app.get('/plants', (req, res) => {
   Plants.find({}, (err, foundPlant) => {
     res.json(foundPlant)
   })
+
 })
 
 
@@ -72,6 +75,7 @@ app.post('/notes/:id', (req, res) => {
     Plants.findByIdAndUpdate(req.params.id, {$push:{notes:note}}, {new:true}, (err, newNote) => {
       res.json(newNote)
     })
+
   })
 })
 
@@ -87,8 +91,10 @@ app.listen(PORT, () => console.log('Listening on port: 3000'));
 
 
 // Connect to Mongo
-mongoose.connect(PROJECT3_DB  ,  { useNewUrlParser: true});
-// mongoose.connect('mongodb://localhost:27017/plants')
+
+//mongoose.connect(PROJECT3_DB  ,  { useNewUrlParser: true});
+mongoose.connect("mongodb://localhost:27017/plants")
+
 
 // Error / success
 mongoose.connection.on('error', (err) => console.log(err.message + ' is Mongod not running?'));
