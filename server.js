@@ -79,6 +79,14 @@ app.post('/notes/:id', (req, res) => {
   })
 })
 
+app.delete('/notes/:id', (req, res) => {
+  Notes.find({}, (err, foundNote) => {
+    Plants.findByIdAndDelete(req.params.id, {$pull:{notes:note}}, {new:true}, (err, updatedPlant) => {
+      res.json(updatedPlant)
+    })
+  })
+})
+
 // app.get('/', (req, res) => {
 //   res.send('hello world');
 // })
