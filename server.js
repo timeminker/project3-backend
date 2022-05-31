@@ -32,25 +32,18 @@ const PROJECT3_DB = process.env.PROJECT3_DB
 app.use(express.json())
 app.use(cors())
 
-
-
-
-
-//routes
+// routes
 app.post('/plants', (req, res) => {
   Plants.create(req.body, (err, addPlant) => {
     res.json(addPlant)
   })
 })
 
-
 app.get('/plants', (req, res) => {
   Plants.find({}, (err, foundPlant) => {
     res.json(foundPlant)
   })
-
 })
-
 
 app.delete('/plants/:id', (req, res) => {
   Plants.findByIdAndDelete(req.params.id, (err, deletedPlant) => {
@@ -64,6 +57,7 @@ app.put('/plants/:id', (req, res) => {
   })
 })
 
+
 app.put('/notes/:id', (req, res) => {
   Plants.findById(req.params.id, (err, foundPlant) => {
     res.json(foundPlant)
@@ -71,13 +65,19 @@ app.put('/notes/:id', (req, res) => {
 })
 
 app.post('/notes/:id', (req, res) => {
-  Notes.create(req.body, (err, review) => {
+  Notes.create(req.body, (err, note) => {
     Plants.findByIdAndUpdate(req.params.id, {$push:{notes:note}}, {new:true}, (err, newNote) => {
       res.json(newNote)
     })
-
   })
 })
+
+app.delete('/notes/:id/:id2', (req, res) => {
+  Plants.updateOne({_id: req.params.id}, {$pull:{notes:{_id:req.params.id2}}}, {new:true}, (err, deletedNote) => {
+    res.json(deletedNote)
+  })
+})
+
 
 // app.get('/', (req, res) => {
 //   res.send('hello world');
@@ -89,12 +89,9 @@ app.post('/notes/:id', (req, res) => {
 app.listen(PORT, () => console.log('Listening on port: 3000'));
 
 
-
 // Connect to Mongo
-
-//mongoose.connect(PROJECT3_DB  ,  { useNewUrlParser: true});
-mongoose.connect("mongodb://localhost:27017/plants")
-
+mongoose.connect(PROJECT3_DB  ,  { useNewUrlParser: true});
+//mongoose.connect("mongodb://localhost:27017/plants")
 
 // Error / success
 mongoose.connection.on('error', (err) => console.log(err.message + ' is Mongod not running?'));
