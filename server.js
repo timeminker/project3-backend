@@ -75,10 +75,10 @@ app.post('/notes/:id', (req, res) => {
   })
 })
 
-app.delete('/notes/:id', (req, res) => {
-  Notes.find({}, (err, foundNote) => {
-    Plants.findByIdAndDelete(req.params.id, {$pull:{notes:note}}, {new:true}, (err, updatedPlant) => {
-      res.json(updatedPlant)
+app.delete('/notes/:id/:id2', (req, res) => {
+  Plants.findById(req.params.id, (err, foundPlant) => {
+    Plants.notes.findByIdAndDelete(req.params.id, {{$pull:{notes:{_id:req.params.id2}}}}, {new:true}, (err, deletedNote) => {
+      res.json(deletedNote)
     })
   })
 })
