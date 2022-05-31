@@ -5,6 +5,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors')
 const Plants = require('./models/plants.js')
+const Notes = require('./models/notes.js')
 
 require('dotenv').config()
 
@@ -64,7 +65,7 @@ app.put('/notes/:id', (req, res) => {
 })
 
 app.post('/notes/:id', (req, res) => {
-  Notes.create(req.body, (err, review) => {
+  Notes.create(req.body, (err, note) => {
     Plants.findByIdAndUpdate(req.params.id, {$push:{notes:note}}, {new:true}, (err, newNote) => {
       res.json(newNote)
     })
@@ -72,10 +73,8 @@ app.post('/notes/:id', (req, res) => {
 })
 
 app.delete('/notes/:id/:id2', (req, res) => {
-  Plants.findById(req.params.id, (err, foundPlant) => {
-    Plants.notes.findByIdAndDelete(req.params.id, {{$pull:{notes:{_id:req.params.id2}}}}, {new:true}, (err, deletedNote) => {
-      res.json(deletedNote)
-    })
+  Plants.updateOne({_id: req.params.id}, {$pull:{notes:{_id:req.params.id2}}}, {new:true}, (err, deletedNote) => {
+    res.json(deletedNote)
   })
 })
 
@@ -91,8 +90,8 @@ app.listen(PORT, () => console.log('Listening on port: 3000'));
 
 
 // Connect to Mongo
-mongoose.connect(PROJECT3_DB  ,  { useNewUrlParser: true});
-mongoose.connect("mongodb://localhost:2")
+//mongoose.connect(PROJECT3_DB  ,  { useNewUrlParser: true});
+mongoose.connect("mongodb://localhost:27017/plants")
 
 // Error / success
 mongoose.connection.on('error', (err) => console.log(err.message + ' is Mongod not running?'));
