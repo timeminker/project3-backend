@@ -56,6 +56,30 @@ app.put('/plants/:id', (req, res) => {
   })
 })
 
+
+app.put('/notes/:id', (req, res) => {
+  Plants.findById(req.params.id, (err, foundPlant) => {
+    res.json(foundPlant)
+  })
+})
+
+app.post('/notes/:id', (req, res) => {
+  Notes.create(req.body, (err, review) => {
+    Plants.findByIdAndUpdate(req.params.id, {$push:{notes:note}}, {new:true}, (err, newNote) => {
+      res.json(newNote)
+    })
+  })
+})
+
+app.delete('/notes/:id/:id2', (req, res) => {
+  Plants.findById(req.params.id, (err, foundPlant) => {
+    Plants.notes.findByIdAndDelete(req.params.id, {{$pull:{notes:{_id:req.params.id2}}}}, {new:true}, (err, deletedNote) => {
+      res.json(deletedNote)
+    })
+  })
+})
+
+
 // app.get('/', (req, res) => {
 //   res.send('hello world');
 // })
