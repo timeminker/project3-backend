@@ -71,7 +71,7 @@ app.put('/notes/:id', (req, res) => {
 })
 
 app.post('/notes/:id', (req, res) => {
-  Notes.create(req.body, (err, review) => {
+  Notes.create(req.body, (err, note) => {
     Plants.findByIdAndUpdate(req.params.id, {$push:{notes:note}}, {new:true}, (err, newNote) => {
       res.json(newNote)
     })
