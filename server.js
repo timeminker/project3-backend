@@ -85,6 +85,10 @@ app.delete('/notes/:id/:id2', (req, res) => {
   })
 })
 
+app.get('/', (req, res) => {
+  res.redirect('/plants')
+})
+
 
 // app.get('/', (req, res) => {
 //   res.send('hello world');
