@@ -5,6 +5,9 @@ const Notes = require('../models/notes.js')
 
 
 router.post('/plants', (req, res) => {
+  if (req.body.image === '') {
+    req.body.image = 'https://i.imgur.com/EXotp4G.png';
+  }
   Plants.create(req.body, (err, addPlant) => {
     res.json(addPlant)
   })
@@ -23,6 +26,9 @@ router.delete('/plants/:id', (req, res) => {
 })
 
 router.put('/plants/:id', (req, res) => {
+  if (req.body.image === '') {
+    req.body.image = 'https://i.imgur.com/EXotp4G.png';
+  }
   Plants.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, updatedPlant) => {
     res.json(updatedPlant)
   })
