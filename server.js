@@ -7,6 +7,10 @@ const cors = require('cors')
 const Plants = require('./models/plants.js')
 const Notes = require('./models/notes.js')
 
+// controllers
+const plantsController = require('./controllers/plants.js')
+const notesController = require('./controllers/notes.js')
+
 require('dotenv').config()
 
 
@@ -31,60 +35,57 @@ const PROJECT3_DB = process.env.PROJECT3_DB
 //___________________
 app.use(express.json())
 app.use(cors())
-// app.use(function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin": 'https://shrouded-wave-73322.herokuapp.com/');
-//     res.header("Access-Control-Allow-Credentials", true);
-//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-//     res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
-//     next();
-// });
+app.use(plantsController)
+
 
 // routes
-app.post('/plants', (req, res) => {
-  Plants.create(req.body, (err, addPlant) => {
-    res.json(addPlant)
-  })
-})
+// app.post('/plants', (req, res) => {
+//   Plants.create(req.body, (err, addPlant) => {
+//     res.json(addPlant)
+//   })
+// })
+//
+// app.get('/plants', (req, res) => {
+//   Plants.find({}, (err, foundPlant) => {
+//     res.json(foundPlant)
+//   })
+// })
+//
+// app.delete('/plants/:id', (req, res) => {
+//   Plants.findByIdAndDelete(req.params.id, (err, deletedPlant) => {
+//     res.json(deletedPlant)
+//   })
+// })
+//
+// app.put('/plants/:id', (req, res) => {
+//   Plants.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, updatedPlant) => {
+//     res.json(updatedPlant)
+//   })
+// })
 
-app.get('/plants', (req, res) => {
-  Plants.find({}, (err, foundPlant) => {
-    res.json(foundPlant)
-  })
-})
 
-app.delete('/plants/:id', (req, res) => {
-  Plants.findByIdAndDelete(req.params.id, (err, deletedPlant) => {
-    res.json(deletedPlant)
-  })
-})
+// app.put('/notes/:id', (req, res) => {
+//   Plants.findById(req.params.id, (err, foundPlant) => {
+//     res.json(foundPlant)
+//   })
+// })
+//
+// app.post('/notes/:id', (req, res) => {
+//   Notes.create(req.body, (err, note) => {
+//     Plants.findByIdAndUpdate(req.params.id, {$push:{notes:note}}, {new:true}, (err, newNote) => {
+//       res.json(newNote)
+//     })
+//   })
+// })
+//
+// app.delete('/notes/:id/:id2', (req, res) => {
+//   Plants.updateOne({_id: req.params.id}, {$pull:{notes:{_id:req.params.id2}}}, {new:true}, (err, deletedNote) => {
+//     res.json(deletedNote)
+//   })
+// })
 
-app.put('/plants/:id', (req, res) => {
-  Plants.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, updatedPlant) => {
-    res.json(updatedPlant)
-  })
-})
 
-
-app.put('/notes/:id', (req, res) => {
-  Plants.findById(req.params.id, (err, foundPlant) => {
-    res.json(foundPlant)
-  })
-})
-
-app.post('/notes/:id', (req, res) => {
-  Notes.create(req.body, (err, note) => {
-    Plants.findByIdAndUpdate(req.params.id, {$push:{notes:note}}, {new:true}, (err, newNote) => {
-      res.json(newNote)
-    })
-  })
-})
-
-app.delete('/notes/:id/:id2', (req, res) => {
-  Plants.updateOne({_id: req.params.id}, {$pull:{notes:{_id:req.params.id2}}}, {new:true}, (err, deletedNote) => {
-    res.json(deletedNote)
-  })
-})
-
+// redirect for heroku
 app.get('/', (req, res) => {
   res.redirect('/plants')
 })
