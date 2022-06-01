@@ -93,7 +93,7 @@ app.delete('/notes/:id/:id2', (req, res) => {
 //___________________
 //Listener
 //___________________
-// app.listen(PORT, () => console.log('Listening on port: 3000'));
+app.listen(PORT, () => console.log('Listening on port: 3000'));
 
 
 // Connect to Mongo
