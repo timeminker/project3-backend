@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Plants = require('../models/plants.js')
+const Notes = require('../models/notes.js')
 
 
 router.post('/plants', (req, res) => {
