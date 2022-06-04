@@ -10,8 +10,12 @@ require('dotenv').config()
 const app = express()
 
 // controllers
-const plantsController = require('./controllers/plants.js')
+const plantsController = require('./controllers/all_plants.js')
 const notesController = require('./controllers/notes.js')
+const userController = require('./controllers/user_controller.js')
+const userPlantsController = require('./controllers/user_plants.js')
+
+
 
 //___________________
 //Port
@@ -30,14 +34,16 @@ const PROJECT3_DB = process.env.PROJECT3_DB
 //___________________
 app.use(express.json())
 app.use(cors())
-app.use(plantsController)
+// app.use(plantsController)
 app.use(notesController)
+app.use(userPlantsController)
+app.use("/", userController)
 
 
 // redirect for heroku
-app.get('/', (req, res) => {
-  res.redirect('/plants')
-})
+// app.get('/', (req, res) => {
+//   res.redirect('/plants')
+// })
 
 //___________________
 //Listener
@@ -45,8 +51,8 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => console.log('Listening on port: 3000'));
 
 // Connect to Mongo
-mongoose.connect(PROJECT3_DB  ,  { useNewUrlParser: true});
-//mongoose.connect("mongodb://localhost:27017/plants")
+// mongoose.connect(PROJECT3_DB  ,  { useNewUrlParser: true});
+mongoose.connect("mongodb://localhost:27017/plants")
 
 // Error / success
 mongoose.connection.on('error', (err) => console.log(err.message + ' is Mongod not running?'));
