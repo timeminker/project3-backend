@@ -2,7 +2,14 @@ const express = require('express')
 const router = express.Router()
 const Plants = require('../models/plants.js')
 const Notes = require('../models/notes.js')
+const seedData = require('../models/seeddata.js')
+const User = require('../models/users.js')
 
+router.get('/plants/seed', (req, res) => {
+  Plants.create(seedData, (err, data) => {
+    res.json(data)
+  })
+})
 
 router.post('/plants', (req, res) => {
   if (req.body.image === '') {
@@ -15,6 +22,7 @@ router.post('/plants', (req, res) => {
 
 router.get('/plants', (req, res) => {
   Plants.find({}, (err, foundPlant) => {
+    console.log();
     res.json(foundPlant)
   })
 })

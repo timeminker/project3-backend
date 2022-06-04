@@ -8,7 +8,8 @@ const plantSchema = new mongoose.Schema({
   image: String,
   sunlight: {type: Number, max:5},
   water: {type: Number, max:5},
-  notes: [Notes.schema]
+  notes: [Notes.schema],
+  user: String
 })
 
 const Plants = mongoose.model('Plant', plantSchema)
